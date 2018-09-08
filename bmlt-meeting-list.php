@@ -568,7 +568,7 @@ if (!class_exists("Bread")) {
 			}
 
 			if ( $this->options['page_fold'] == 'half' && $this->options['page_size'] == '5inch' ) {
-			    $page_type_settings = ['format' => array(215.9,279.4), 'margin_footer' => 5];
+			    $page_type_settings = ['format' => array(197.2,279.4), 'margin_footer' => 5];
 			} elseif ( $this->options['page_fold'] == 'half' && $this->options['page_size'] == 'A5' ) {
                 $page_type_settings = ['format' => 'A5', 'margin_footer' => 5];
 			} elseif ( $this->options['page_size'] . '-' .$this->options['page_orientation'] == 'ledger-L' ) {
@@ -1244,7 +1244,7 @@ if (!class_exists("Bread")) {
 				if ( $this->options['page_size'] == '5inch' ) {
 					$this->mpdftmp=new mPDF([
                         'mode' => $mode,
-                        'format' => array(215.9,279.4),
+                        'format' => array(197.2,279.4),
                         'default_font_size' => '',
                         'margin_left' => 0,
                         'margin_right' => 0,
@@ -1383,11 +1383,20 @@ if (!class_exists("Bread")) {
 			$this->options['front_page_content'] = str_replace("[service_body_5]", strtoupper($this->options['service_body_5']), $this->options['front_page_content']);
 			$this->options['front_page_content'] = str_replace("[area]", strtoupper($this->options['service_body_1']), $this->options['front_page_content']);
 			$this->options['front_page_content'] = str_replace('[page_break no_page_number]', '<sethtmlpagefooter name="" value="0" /><pagebreak />', $this->options['front_page_content']);
-			// $this->options['front_page_content'] = str_replace('[start_page_numbers]', '<sethtmlpagefooter name="MyFooter" page="ALL" value="1" />', $this->options['front_page_content']);
+   $this->options['front_page_content'] = str_replace('[start_page_numbers]', '<sethtmlpagefooter name="MyFooter" page="ALL" value="1" />', $this->options['front_page_content']);  //Nope
+   
+   // Nope this->options['front_page_content'] = str_replace('[start_page_numbers]', $this->mpdf->WriteHTML('<sethtmlpagefooter name="MyFooter" page="ALL" value="1" />'), $this->options['front_page_content']);
+   
+   // Nope $this->mpdf->WriteHTML('<sethtmlpagefooter name="MyFooter" page="ALL" value="1" />');
+   // Nope $this->mpdf->SetFooter('{PAGENO}');
+   
+   
+   /* Nope
    if (strpos($this->options['front_page_content'], '[start_page_numbers]')) {
      $this->options['front_page_content'] = str_replace('[start_page_numbers]', '', $this->options['front_page_content']);
      $this->mpdf->WriteHTML('<sethtmlpagefooter name="MyFooter" page="ALL" value="1" />');
    }
+   */
 			$this->options['front_page_content'] = mb_convert_encoding($this->options['front_page_content'], 'HTML-ENTITIES');
 			$this->mpdf->WriteHTML(utf8_encode(wpautop(stripslashes($this->options['front_page_content']))));
 			
